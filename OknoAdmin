@@ -28,9 +28,9 @@
             { 
                 // записываем данные из полей в таблицу бд 
                 Users1.login = TextBox1.Text; 
-                Users1.password = TextBox2.Text; 
+                Users1.password = TextBox2.Text; // Обозначить в Xaml так - Binding="{Binding password}"
                 Users1.role2 = (typeRole.SelectedItem as Role).ID; 
-                Users1.surname = TextBox3.Text; 
+                Users1.surname = TextBox3.Text;  
                 Users1.name = TextBox4.Text; 
                 Users1.othcestvo = TextBox5.Text; 
                 Users1.count = 0; 
