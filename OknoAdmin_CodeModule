@@ -1,0 +1,56 @@
+
+// Окно админа
+
+        using System.Data.Entity;
+
+        hotelEntities db = new hotelEntities(); 
+
+        public Window1() 
+        { 
+            InitializeComponent(); 
+            var rol1 = (from x in db.Role select x).ToArray(); 
+            typeRole.DisplayMemberPath = "role1"; 
+            typeRole.SelectedValuePath = "ID"; 
+            typeRole.ItemsSource = rol1;  // Для выбора роли при добавлении
+            db.Users.Load(); 
+            typeRole.ItemsSource = db.Users.Local.ToBindingList(); // Внесение изменений в таблице
+ 
+            var user1 = (from u in db.Users select u).ToArray(); 
+            GridUser.ItemsSource = user1; // Для вывода данных в БД 
+ 
+        } 
+ 
+        private void button3_Click(object sender, RoutedEventArgs e) // Кнопка добавления
+        { 
+            Users Users1 = new Users();  // Таблица из БД 
+            var user2 = (from u in db.Users where u.login == TextBox1.Text select u).ToArray();  
+            if (user2.Length == 0) 
+            { 
+                // записываем данные из полей в таблицу бд 
+                Users1.login = TextBox1.Text; 
+                Users1.password = TextBox2.Text; 
+                Users1.role2 = (typeRole.SelectedItem as Role).ID; 
+                Users1.surname = TextBox3.Text; 
+                Users1.name = TextBox4.Text; 
+                Users1.othcestvo = TextBox5.Text; 
+                Users1.count = 0; 
+                Users1.active = true; 
+                Users1.date = null; 
+                db.Users.Add(Users1); 
+                db.SaveChanges(); 
+                
+                var user1 = (from u in db.Users select u).ToArray(); 
+                GridUser.ItemsSource = user1; 
+                MessageBox.Show("Данные успешно добавлены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); 
+            } 
+            else 
+            { 
+                MessageBox.Show("Такой пользователь уже существует", "!", MessageBoxButton.OK, MessageBoxImage.Error); 
+            } 
+        } 
+ 
+        private void button4_Click(object sender, RoutedEventArgs e) 
+        { 
+            db.SaveChanges(); 
+        } 
+    }
