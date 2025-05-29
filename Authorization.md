@@ -48,7 +48,6 @@
             } 
             catch (SystemException) 
             { 
-                MessageBox.Show("Ошибка системы", "Ошибка", MessageBoxButton.OK, 
-MessageBoxImage.Error); 
+                MessageBox.Show("Ошибка системы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); 
             } 
         }
