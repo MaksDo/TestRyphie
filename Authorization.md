@@ -1,7 +1,5 @@
 # TestRyphie
-
 // АВТОРИЗАЦИЯ (КНОПКА ВХОДА)
-
 hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
         public MainWindow() 
         { 
@@ -11,13 +9,11 @@ hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
         { 
             try 
             { 
-                var user = (from x in db.Users              // Users -- Таблица из БД
-                            where x.login == TextBox1.Text  // login -- название переменной в таблице из БД
-                            select x).ToArray(); 
+                var user = (from x in db.Users where x.login == TextBox1.Text select x).ToArray();           // Users -- Таблица из БД; login -- название переменной в таблице из БД
+                
                 if (TextBox1.Text.Length == 0 || TextBox2.Text.Length == 0) 
                 { 
-                    MessageBox.Show("Поля Логин и Пароль обязательны для заполнения", 
-                    "!", MessageBoxButton.OK, MessageBoxImage.Error); 
+                    MessageBox.Show("Поля Логин и Пароль обязательны для заполнения", "!", MessageBoxButton.OK, MessageBoxImage.Error); 
                 } 
                 else 
                 { 
@@ -28,29 +24,23 @@ hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
                             switch (user[0].role2) 
                             { 
                                 case 1: 
-                                    MessageBox.Show("Добро пожаловать. Вы успешно 
-авторизировались как администратор  " + user[0].surname, "Уведомление", MessageBoxButton.OK, 
-MessageBoxImage.Information); 
+                                    MessageBox.Show("Добро пожаловать. Вы успешно авторизировались как администратор  " + user[0].surname, "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); 
                                     Window1 window = new Window1(); 
                                     window.Show(); 
                                     break; 
                                 case 2: 
-                                    MessageBox.Show("Добро пожаловать. Вы успешно 
-авторизировались как пользователь  " + user[0].surname, "Уведомление", MessageBoxButton.OK, 
-MessageBoxImage.Information); 
+                                    MessageBox.Show("Добро пожаловать. Вы успешно авторизировались как пользователь  " + user[0].surname, "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); 
                                     Window2 window1 = new Window2(); 
                                     window1.Show(); 
                                     break; 
                                 default: 
-                                    MessageBox.Show("Данные не обнаружены", "Уведомление", 
-MessageBoxButton.OK, MessageBoxImage.Information); 
+                                    MessageBox.Show("Данные не обнаружены", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); 
                                     break; 
                             } 
                         } 
                         else  
                         { 
-                            MessageBox.Show("Вы ввели неверный логин или пароль", "Пожалуйста 
-проверьте ещё раз введенные данные",  
+                            MessageBox.Show("Вы ввели неверный логин или пароль", "Пожалуйста проверьте ещё раз введенные данные",  
                                 MessageBoxButton.OK, MessageBoxImage.Error); 
                         } 
                     } 
