@@ -1,6 +1,7 @@
 # TestRyphie
 // АВТОРИЗАЦИЯ (КНОПКА ВХОДА)
-hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
+
+        hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
         public MainWindow() 
         { 
             InitializeComponent(); 
@@ -10,7 +11,6 @@ hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
             try 
             { 
                 var user = (from x in db.Users where x.login == TextBox1.Text select x).ToArray();           // Users -- Таблица из БД; login -- название переменной в таблице из БД
-                
                 if (TextBox1.Text.Length == 0 || TextBox2.Text.Length == 0) 
                 { 
                     MessageBox.Show("Поля Логин и Пароль обязательны для заполнения", "!", MessageBoxButton.OK, MessageBoxImage.Error); 
