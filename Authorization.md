@@ -9,18 +9,13 @@ hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
         } 
         private void Button1_Click(object sender, RoutedEventArgs e) 
         { 
-           
             try 
             { 
-                
                 var user = (from x in db.Users              // Users -- Таблица из БД
                             where x.login == TextBox1.Text  // login -- название переменной в таблице из БД
                             select x).ToArray(); 
- 
-                
                 if (TextBox1.Text.Length == 0 || TextBox2.Text.Length == 0) 
                 { 
-                   
                     MessageBox.Show("Поля Логин и Пароль обязательны для заполнения", 
                     "!", MessageBoxButton.OK, MessageBoxImage.Error); 
                 } 
@@ -51,7 +46,6 @@ MessageBoxImage.Information);
 MessageBoxButton.OK, MessageBoxImage.Information); 
                                     break; 
                             } 
- 
                         } 
                         else  
                         { 
@@ -60,11 +54,8 @@ MessageBoxButton.OK, MessageBoxImage.Information);
                                 MessageBoxButton.OK, MessageBoxImage.Error); 
                         } 
                     } 
-                
                 } 
- 
             } 
- 
             catch (SystemException) 
             { 
                 MessageBox.Show("Ошибка системы", "Ошибка", MessageBoxButton.OK, 
