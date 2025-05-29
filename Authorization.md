@@ -1,4 +1,4 @@
-# TestRyphie
+
 // АВТОРИЗАЦИЯ (КНОПКА ВХОДА)
 
         hotelEntities db = new hotelEntities(); // hotelEntities - СВОЯ БАЗА
