@@ -10,6 +10,67 @@
             return _context;
         }
 
+
+        // Авторизация + глобальные данные для входа по роли 
+
+        string login = TextLogin.Text.Trim();
+            string password = TextPassword.Password;
+            
+            try
+            {
+                using(var context = new LogisticDatabaseEntities())
+                {
+                    var user = context.Пользователь.FirstOrDefault(u => u.Логин == login && u.Пароль == password);
+                    if(user != null)
+                    {
+                        if(TextLogin.Text.Length < 6 || TextLogin.Text.Length > 20 || TextPassword.Password.Length < 6 || TextPassword.Password.Length > 20)
+                        {
+                            
+                            MessageBox.Show("Неверный логин или пароль. Неподходящая длина логина и/или пароля!");
+                        }
+                        else
+                        {
+                            GlobalVariables.Логин = user.Логин;
+                            GlobalVariables.Роль = user.Роль;
+
+                            MessageBox.Show("Вы успешно авторизовались! Права аккаунта: " + user.Роль);
+                            TransitionWindow tran = new TransitionWindow();
+                            tran.Show();
+                            this.Close();
+
+                        }
+
+                        
+                    }
+                    else
+                    {
+                        TextLogin.BorderBrush = new SolidColorBrush(Colors.Red);
+                        TextPassword.BorderBrush = new SolidColorBrush(Colors.Red);
+                        MessageBox.Show("Неверный логин или пароль. Данные не найдены!");
+                    }
+                         
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Произошла ошибка при попытке войти: " + ex.Message);
+            }
+
+
+        // глобальные данные добавить отдельно(можно скипнуть, тогда и в кнопке убрать напоминание о глобальных данных)
+        public static class GlobalVariables
+        {
+            public static string Логин { get; set; }
+            public static string Роль { get; set; }
+        }
+        // Если оставить глоб, то в окне админа
+            InitializeComponent();
+
+            RoleText.Content = GlobalVariables.Роль; // название Text = Label в окне
+
+            
+
         // Вывести данные Окно Админа Xaml
 
         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="9" Grid.RowSpan="5" FontSize="14"
