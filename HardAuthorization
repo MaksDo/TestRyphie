@@ -1,4 +1,4 @@
-// Авторизация с датами и блоком
+// Авторизация с датами и баном
 
         hotelEntities db = new hotelEntities(); 
         public MainWindow() 
