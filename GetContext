@@ -125,7 +125,12 @@
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
         try {
-            var newClient = new Клиент { Контактное_лицо = NameTextBox.Text }; // Каждые данные по очереди прописать
+            var newClient = new Клиент 
+        {
+            Контактное_лицо = NameTextBox.Text,
+            Телефон = int.Parse(PhoneTextBox.Text),
+            Дата_регистрации = DateTime.Parse(DateTextBox.Text)
+        };                                                         // Каждые данные по очереди прописать, в скобках прописывать через запятую(для строки числа и даты разные как видно на примере)
         
             LogisticDatabaseEntities.GetContext().Клиент.Add(newClient);
             LogisticDatabaseEntities.GetContext().SaveChanges();
