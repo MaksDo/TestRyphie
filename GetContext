@@ -23,24 +23,13 @@
                     var user = context.Пользователь.FirstOrDefault(u => u.Логин == login && u.Пароль == password);
                     if(user != null)
                     {
-                        if(TextLogin.Text.Length < 6 || TextLogin.Text.Length > 20 || TextPassword.Password.Length < 6 || TextPassword.Password.Length > 20)
-                        {
-                            
-                            MessageBox.Show("Неверный логин или пароль. Неподходящая длина логина и/или пароля!");
-                        }
-                        else
-                        {
                             GlobalVariables.Логин = user.Логин;
                             GlobalVariables.Роль = user.Роль;
 
                             MessageBox.Show("Вы успешно авторизовались! Права аккаунта: " + user.Роль);
                             TransitionWindow tran = new TransitionWindow();
                             tran.Show();
-                            this.Close();
-
-                        }
-
-                        
+                            this.Close(); 
                     }
                     else
                     {
