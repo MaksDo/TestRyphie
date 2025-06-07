@@ -26,7 +26,7 @@
                             GlobalVariables.Логин = user.Логин;
                             GlobalVariables.Роль = user.Роль;
 
-                            MessageBox.Show("Вы успешно авторизовались! Права аккаунта: " + user.Роль);
+                            MessageBox.Show("Вы успешно авторизовались!");
                             TransitionWindow tran = new TransitionWindow();
                             tran.Show();
                             this.Close(); 
