@@ -125,7 +125,9 @@
             LogisticDatabaseEntities.GetContext().SaveChanges();
         
             LoadData(); 
-            NameTextBox.Clear(); // также добавить названия других textbox
+            NameTextBox.Clear(); // также добавить названия других своих textbox
+            PhoneTextBox.Clear();
+            DateTextBox.Clear();
         }
         catch (Exception ex)
         {
