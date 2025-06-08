@@ -1,0 +1,59 @@
+  SQL
+	INSERT INTO [Постояльцы](ID_Номер,Дата_Въезда,Дата_Выезда)
+	SELECT TOP 18 F12,Въезд,Выезд FROM [ПостояльцыПОРВола]
+	SELECT F12,Въезд,Выезд FROM [ПостояльцыПОРВола];
+
+
+
+	Excel
+	=ВПР(A2:A19;J$2:K$4;2;0) << A2:A19 - Все строчки с данными; J$2:K$4 - самодельная таблица с $ >>
+
+
+
+	WPF(Авторизация - Интерфейс)
+	<Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="1" Width="300" Height="50" x:Name="TextLogin"/>
+        <PasswordBox Grid.Row="2" Width="300" Height="50" x:Name="TextParol"/>
+        <Button Grid.Row="3" Width="200" Height="60" Content="Вход" FontSize="30" x:Name="Vxod"/>
+
+
+	WPF(Окно таблицы - Интерфейс)
+	<Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="600" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="500"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="role" FontSize="30"/>
+
+        <Button Width="200" Height="60" Content="Добавить" Background="Green" Foreground="White" FontSize="20" Grid.Row="2" Grid.Column = "1" Click="Button_Click"/>
+        <Button Width="200" Height="60" Content="Удалить" Background="Red" Foreground="White" FontSize="20" Grid.Row="3" Grid.Column = "1" Click="Button1_Click"/>
+        <DataGrid AutoGenerateColumns = "False" IsReadOnly = "True" Grid.Row = "1" Grid.Column = "1" FontSize = "14"
+                  Margin = "0 10 0 0" x:Name = "GridClients" BorderBrush = "Black" BorderThickness = "1" >
+            <DataGrid.Columns >
+                <DataGridTextColumn Binding = "{Binding Фамилия}" Header = "Фамилия" Width = "*" />
+                <DataGridTextColumn Binding = "{Binding Имя}" Header = "Имя лицо" Width = "*" />
+                <DataGridTextColumn Binding = "{Binding Отчество}" Header = "Отчество" Width = "*" />
+               
+            </DataGrid.Columns>
+        </DataGrid >
+        <TextBox Grid.Row="1" Grid.Column="2" Height="50" x:Name="Famil"/>
+        <TextBox Grid.Row="1" Grid.Column="2" Height="50" Margin="0 300 0 0" x:Name="Ima"/>
+        <TextBox Grid.Row="1" Grid.Column="2" Height="50" Margin="0 0 0 300" x:Name="Otche"/>
