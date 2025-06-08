@@ -55,9 +55,14 @@
         }
         // Если оставить глоб, то в окне админа
             InitializeComponent();
-
+            role.Content = GlobalVariables.Роль;
             RoleText.Content = GlobalVariables.Роль; // название Text = Label в окне
+            if (GlobalVariables.Роль == "Сотрудник")
+            {
+                delete.Background = new SolidColorBrush(Colors.Black); // Перекрас чего либо (Background)
+                delete.IsEnabled = false; // Отключение чего либо (delete)
 
+            }
             
 
         // Вывести данные Окно Админа Xaml
