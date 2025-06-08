@@ -1,5 +1,5 @@
         // GetContext Method
-        // В tt.cs при БД подключенной
+        // В Model.edmx базы данных --> Context.tt -- > Context.cs при БД уже подключенной
 
         private static LogisticDatabaseEntities _context;
 
