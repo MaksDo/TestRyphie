@@ -97,12 +97,12 @@
                 }
             }
 
-  // Добавление с выводом в одном окне 
+  // Добавление с выводом в Окне админа 
 
   public ClientsWindow()
     {
         InitializeComponent();
-        LoadData();
+        LoadData(); <-- Добавить это
     }
 
     private void LoadData()
