@@ -18,35 +18,48 @@
             
             try
             {
-                using(var context = new LogisticDatabaseEntities())
+                using (var context = new DemoLightHzEntities())
                 {
-                    var user = context.Пользователь.FirstOrDefault(u => u.Логин == login && u.Пароль == password);
-                     if(user.sss == true)
+                    var user = context.Клиент.FirstOrDefault(u => u.Фамилия == login && u.Имя == password);
+                    if (user.sss == true)
                     {
                         MessageBox.Show("Ban");
                         return;  // проверка на бан
                     }
-                    if(user != null)
+                    if (user != null)
                     {
-                            GlobalVariables.Логин = user.Логин;
-                            GlobalVariables.Роль = user.Роль;
+                        if (user.sss == true) // Если первый вход
+                        {
+                            var changePassWindow = new change(user);
+                            changePassWindow.ShowDialog();
+
+                            // Закрываем окно входа только если пароль успешно изменен
+                            if (user.sss == false) // sss - это bit значение в БД
+                                this.Close();
+                        }
+                        else
+                        {
+                            GlobalVariables.Логин = user.Фамилия;
+                            GlobalVariables.Роль = user.Отчество;
 
                             MessageBox.Show("Вы успешно авторизовались!");
-                            TransitionWindow tran = new TransitionWindow();
+                            OknoAdmina tran = new OknoAdmina();
                             tran.Show();
-                            this.Close(); 
+                            this.Close();
+                        }
+                        
                     }
                     else
                     {
                         TextLogin.BorderBrush = new SolidColorBrush(Colors.Red);
-                        TextPassword.BorderBrush = new SolidColorBrush(Colors.Red);
+                        TextParol.BorderBrush = new SolidColorBrush(Colors.Red);
                         MessageBox.Show("Неверный логин или пароль. Данные не найдены!");
                     }
-                         
+
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Произошла ошибка при попытке войти: " + ex.Message);
             }
@@ -195,3 +208,57 @@
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
+
+
+
+        // Смена пароля полный код
+
+        
+        private Клиент _user;
+        public change(Клиент _user)
+        {
+            InitializeComponent();
+            _user = user;
+            Title = $"Смена пароля для {user.Логин}";
+        }
+
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewPasswordBox.Password != ConfirmPasswordBox.Password)
+            {
+                MessageBox.Show("Пароли не совпадают");
+                return;
+            }
+
+            _user.Пароль = NewPasswordBox.Password;
+            _user.sss = false; // Отмечаем что пароль изменен
+
+            try
+            {
+                GetContext().SaveChanges();
+                MessageBox.Show("Пароль успешно изменен");
+
+                // Открываем главное окно
+                MainWindow mainWindow = new MainWindow(_user);
+                mainWindow.Show();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+        }
+
+
+        // смена пароля xaml
+        
+        <StackPanel Margin="10">
+            <TextBlock Text="Новый пароль:" Margin="0,5"/>
+            <PasswordBox x:Name="NewPasswordBox" Margin="0,5"/>
+
+            <TextBlock Text="Подтвердите пароль:" Margin="0,5"/>
+            <PasswordBox x:Name="ConfirmPasswordBox" Margin="0,5"/>
+
+            <Button Content="Сохранить" Click="SaveButton_Click" Margin="0,15" Padding="10,3"/>
+        </StackPanel>
