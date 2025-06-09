@@ -1,4 +1,4 @@
-  // В отдельном окне
+  // В отдельном окне, переход с окна админа на другое окно
   using Newtonsoft.Json.Linq;
     using System.Net.Http;
   
