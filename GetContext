@@ -14,57 +14,81 @@
         // Авторизация + глобальные данные для входа по роли 
 
         string login = TextLogin.Text.Trim();
-            string password = TextPassword.Password;
-            
+            string password = TextParol.Password;
+
             try
             {
                 using (var context = new DemoLightHzEntities())
                 {
-                    var user = context.Клиент.FirstOrDefault(u => u.Фамилия == login && u.Имя == password);
-                    if(loginAttempts == 3) // попытки входа
-                    {
-                        TextParol.IsEnabled = false;
-                        TextLogin.IsEnabled = false;
-                        Vxod.IsEnabled = false;
-                        MessageBox.Show("Ошибка");
-                    }
-                    if (user.sss == true)
-                    {
-                        MessageBox.Show("Ban");
-                        return;  // проверка на бан
-                    }
+                    var user = context.Клиент.FirstOrDefault(u => u.Фамилия == login);
+
                     if (user != null)
                     {
-                        if (user.sss == true) // Если первый вход
+                        // Проверка пароля
+                        if (user.Имя == password)
                         {
-                            var changePassWindow = new change(user);
-                            changePassWindow.ShowDialog();
-
-                            // Закрываем окно входа только если пароль успешно изменен
-                            if (user.sss == false) // sss - это bit значение в БД
+                            if (user.sss == true) // Если первый вход
+                            {
+                                change tran = new change(user);
+                                tran.Show();
                                 this.Close();
+
+
+                            }
+                            else if(user.sss == false)
+                            {
+                                GlobalVariables.Логин = user.Фамилия;
+                                GlobalVariables.Роль = user.Отчество;
+
+                                MessageBox.Show("Вы успешно авторизовались!");
+                                OknoAdmina tran = new OknoAdmina();
+                                tran.Show();
+                                this.Close();
+                            }
+                            // Сбрасываем счетчик при успешном входе
+                            loginAttempts = 0;
                         }
                         else
                         {
-                            GlobalVariables.Логин = user.Фамилия;
-                            GlobalVariables.Роль = user.Отчество;
+                            loginAttempts++;
 
-                            MessageBox.Show("Вы успешно авторизовались!");
-                            OknoAdmina tran = new OknoAdmina();
-                            tran.Show();
-                            this.Close();
+                            // Блокировка пользователя после 3 неудачных попыток
+                            if (loginAttempts >= 3)
+                            {
+                                user.sss = true; // Устанавливаем флаг блокировки
+                                context.SaveChanges();
+
+                                TextParol.IsEnabled = false;
+                                TextLogin.IsEnabled = false;
+                                Vxod.IsEnabled = false;
+                                MessageBox.Show("Превышено количество попыток входа. Аккаунт заблокирован.");
+                            }
+                            else
+                            {
+                                TextLogin.BorderBrush = new SolidColorBrush(Colors.Red);
+                                TextParol.BorderBrush = new SolidColorBrush(Colors.Red);
+                                MessageBox.Show($"Неверный пароль. Осталось попыток: {3 - loginAttempts}");
+                            }
                         }
-                        
                     }
                     else
                     {
-                        TextLogin.BorderBrush = new SolidColorBrush(Colors.Red);
-                        TextParol.BorderBrush = new SolidColorBrush(Colors.Red);
-                        MessageBox.Show("Неверный логин или пароль. Данные не найдены!");
+                        loginAttempts++;
+                        if (loginAttempts >= 3)
+                        {
+                            TextParol.IsEnabled = false;
+                            TextLogin.IsEnabled = false;
+                            Vxod.IsEnabled = false;
+                            MessageBox.Show("Превышено количество попыток ввода.");
+                        }
+                        else
+                        {
+                            TextLogin.BorderBrush = new SolidColorBrush(Colors.Red);
+                            TextParol.BorderBrush = new SolidColorBrush(Colors.Red);
+                            MessageBox.Show("Пользователь не найден!");
+                        }
                     }
-
                 }
-
             }
             catch (Exception ex)
             {
