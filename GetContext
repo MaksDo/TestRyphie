@@ -20,12 +20,12 @@
             {
                 using (var context = new DemoLightHzEntities())
                 {
-                    var user = context.Клиент.FirstOrDefault(u => u.Фамилия == login);
+                    var user = context.Пользователь.FirstOrDefault(u => u.Логин == login);
 
                     if (user != null)
                     {
                         // Проверка пароля
-                        if (user.Имя == password)
+                        if (user.Пароль == password)
                         {
                             if (user.sss == true) // Если первый вход
                             {
@@ -37,8 +37,8 @@
                             }
                             else if(user.sss == false)
                             {
-                                GlobalVariables.Логин = user.Фамилия;
-                                GlobalVariables.Роль = user.Отчество;
+                                GlobalVariables.Логин = user.Логин;
+                                GlobalVariables.Роль = user.Роль;
 
                                 MessageBox.Show("Вы успешно авторизовались!");
                                 OknoAdmina tran = new OknoAdmina();
