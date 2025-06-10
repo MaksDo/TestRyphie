@@ -24,10 +24,16 @@
 
                     if (user != null)
                     {
-                        // Проверка пароля
-                        if (user.Пароль == password)
+                        if (user.Ban == true) // Если забанен
                         {
-                            if (user.sss == true) // Если первый вход
+                            MessageBox.Show("Бан");
+                            return;
+
+                        }
+                        // Проверка пароля
+                        if (user.Имя == password)
+                        {
+                            if (user.First == true) // Если первый вход
                             {
                                 change tran = new change(user);
                                 tran.Show();
@@ -35,10 +41,10 @@
 
 
                             }
-                            else if(user.sss == false)
+                            else if(user.First == false)
                             {
-                                GlobalVariables.Логин = user.Логин;
-                                GlobalVariables.Роль = user.Роль;
+                                GlobalVariables.Логин = user.Фамилия;
+                                GlobalVariables.Роль = user.Отчество;
 
                                 MessageBox.Show("Вы успешно авторизовались!");
                                 OknoAdmina tran = new OknoAdmina();
@@ -55,7 +61,7 @@
                             // Блокировка пользователя после 3 неудачных попыток
                             if (loginAttempts >= 3)
                             {
-                                user.sss = true; // Устанавливаем флаг блокировки
+                                user.Ban = true; // Устанавливаем флаг блокировки
                                 context.SaveChanges();
 
                                 TextParol.IsEnabled = false;
