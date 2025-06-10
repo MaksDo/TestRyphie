@@ -1,6 +1,6 @@
         // GetContext Method
         // В Model.edmx базы данных --> Context.tt -- > Context.cs при БД уже подключенной
-
+        // MainWindow, OknoAdmina, change
         private static LogisticDatabaseEntities _context;
 
         public static LogisticDatabaseEntities GetContext()
@@ -21,6 +21,13 @@
                 using (var context = new DemoLightHzEntities())
                 {
                     var user = context.Клиент.FirstOrDefault(u => u.Фамилия == login && u.Имя == password);
+                    if(loginAttempts == 3) // попытки входа
+                    {
+                        TextParol.IsEnabled = false;
+                        TextLogin.IsEnabled = false;
+                        Vxod.IsEnabled = false;
+                        MessageBox.Show("Ошибка");
+                    }
                     if (user.sss == true)
                     {
                         MessageBox.Show("Ban");
